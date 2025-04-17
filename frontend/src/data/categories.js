@@ -1,6 +1,1 @@
-export const categories = [
-    "Positif",
-    "Suggestion",
-    "Critique"
-  ]
-  
+export const categories = ['Positif', 'Suggestion', 'Critique'];

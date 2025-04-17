@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+@import "./modules/breakpoints";
+@import "fonts";
+
+/* Dimensions */
+$max-width: 1640px;
+
+/* Couleurs classiques */
+$color-black: black;
+$color-white: white;
+/* Couleurs custom */
+$color-pink-light: #f7e6df;
+$color-pink-dark: #e7677e;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: calc(1em * 0.625);
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  background-color: transparent;
+  color: $color-pink-dark;
+  font-family: $family-default;
+  font-size: 1.6rem;
+  font-weight: 400; // regular
+
+  #wrapper {
+    flex: 1 0 auto;
+  }
+
+  #footer {
+    flex-shrink: 0;
+  }
+
+  /* Styles classiques */
+  @import "commons";
+  @import "content";
+  @import "header";
+  @import "footer";
+}

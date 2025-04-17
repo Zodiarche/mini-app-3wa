@@ -1,0 +1,97 @@
+main {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .title {
+    font-family: $family-default;
+    font-weight: 600; // semi-bold
+    color: $color-pink-dark;
+
+    font-style: normal;
+    line-height: normal;
+
+    br {
+      @include from("desktop") {
+        display: block;
+      }
+      display: none;
+    }
+  }
+
+  h1,
+  .h1 {
+    @include from("desktop") {
+      font-size: 5rem;
+    }
+    font-size: 3rem;
+
+    a {
+      text-decoration: none;
+
+      // &:hover, &:focus-visible {}
+      // &:active {}
+    }
+  }
+
+  h2,
+  .h2 {
+    @include from("desktop") {
+      font-size: 3rem;
+    }
+    font-size: 2.3rem;
+
+    a {
+      text-decoration: none;
+
+      // &:hover, &:focus-visible{}
+      // &:active {}
+    }
+  }
+
+  h3,
+  .h3 {
+    @include from("desktop") {
+      font-size: 3rem;
+    }
+    font-size: 2.5rem;
+
+    a {
+      text-decoration: none;
+
+      // &:hover, &:focus-visible{}
+      // &:active {}
+    }
+  }
+
+  p,
+  li,
+  blockquote,
+  td,
+  th,
+  button,
+  address {
+    line-height: 1.6;
+  }
+
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+
+  // strong, b {}
+
+  blockquote {
+    p {
+      @extend .no-margin-first-last;
+    }
+  }
+}
+
+@import "./pages/home.scss";
