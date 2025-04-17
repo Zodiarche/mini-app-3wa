@@ -12,6 +12,16 @@ button:active {
   transition-duration: 0s;
 }
 
+.txt-center {
+  text-align: center;
+}
+.txt-left {
+  text-align: left;
+}
+.txt-right {
+  text-align: right;
+}
+
 .visuallyhidden:not(:focus):not(:active) {
   position: absolute;
 
@@ -118,7 +128,7 @@ iframe {
   cursor: pointer;
   display: inline-block;
   background-color: $color-pink-dark;
-  color: $color-white;
+  color: $color-pink-light;
   text-decoration: none;
   font-family: $family-default;
   font-weight: 350; // Book
@@ -131,12 +141,9 @@ iframe {
   &:not([disabled]) {
     &:hover,
     &:focus-visible {
+      background-color: $color-pink-light;
       color: $color-pink-dark;
       border-color: $color-pink-dark;
-    }
-
-    &:focus-visible {
-      transform: scale(1.1);
     }
 
     &:active {

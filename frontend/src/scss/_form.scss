@@ -1,0 +1,54 @@
+label,
+.label {
+  display: block;
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+[type="text"],
+[type="email"],
+[type="password"],
+[type="tel"],
+[type="number"],
+[type="search"],
+[type="url"],
+[type="date"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  color: $color-pink-dark;
+
+  font-family: $family-default;
+  outline: none;
+  border: solid 0.1rem $color-pink-dark;
+  border-radius: 2.5rem;
+  transition-duration: 0.4s;
+  padding: 1rem;
+
+  &:hover,
+  &:focus {
+    background-color: $color-pink-dark;
+    color: $color-pink-light;
+  }
+}
+
+textarea {
+  resize: none;
+  padding: 2rem;
+}
+
+.field {
+  margin-top: 2rem;
+}
+
+[type="submit"] {
+  @extend .btn;
+
+  &:hover,
+  &:focus {
+    background-color: $color-pink-light;
+    color: $color-pink-dark;
+  }
+}

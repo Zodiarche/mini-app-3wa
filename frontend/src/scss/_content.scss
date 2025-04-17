@@ -92,6 +92,11 @@ main {
       @extend .no-margin-first-last;
     }
   }
+
+  form {
+    @import "form";
+  }
 }
 
 @import "./pages/home.scss";
+@import "./pages/form.scss";
