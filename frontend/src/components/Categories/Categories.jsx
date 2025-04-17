@@ -1,8 +1,30 @@
 import React from 'react';
-import { categories } from '../../data/categories';
+
+import { useQuery } from '@tanstack/react-query';
+
 import { CategoryCard } from './CategoryCard';
 
 export function Categories({ setCategory, category }) {
+  const {
+    data: categories,
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+    error: errorCategories,
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () =>
+      fetch(`http://localhost:5000/api/categories`).then((response) => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      }),
+    cacheTime: 0,
+  });
+
+  console.log(categories);
+
+  if (isLoadingCategories) return <div>Chargement...</div>;
+  if (isErrorCategories) return <div>Erreur: {errorCategories.message}</div>;
+
   return (
     <div className="CategoriesContainer">
       <ul>
@@ -11,8 +33,13 @@ export function Categories({ setCategory, category }) {
           Tous
         </li>
 
-        {categories.map((element, index) => (
-          <CategoryCard key={index} name={element} setCategory={setCategory} category={category} />
+        {categories.map((element) => (
+          <CategoryCard
+            key={element._id}
+            name={element.name}
+            setCategory={setCategory}
+            category={category}
+          />
         ))}
       </ul>
     </div>

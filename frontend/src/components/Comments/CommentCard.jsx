@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function CommentCard({ title, message, date, category }) {
+export function CommentCard({ title, content, createdAt, categoryName }) {
   const options = {
     year: 'numeric',
     month: 'long',
@@ -12,9 +12,9 @@ export function CommentCard({ title, message, date, category }) {
   return (
     <li>
       <h2>{title}</h2>
-      <p> Catégorie : {category} </p>
-      <p> {message} </p>
-      <p className="date"> {new Date(date).toLocaleDateString('fr-FR', options)} </p>
+      <p> Catégorie : {categoryName} </p>
+      <p> {content} </p>
+      <p className="date"> {new Date(createdAt).toLocaleDateString('fr-FR', options)} </p>
     </li>
   );
 }
