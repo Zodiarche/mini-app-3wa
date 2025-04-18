@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
 import { addComment, getCategories } from '../../utils/api';
 
 export function Form() {
@@ -13,7 +15,7 @@ export function Form() {
     error: errorCategories,
   } = useQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories(),
+    queryFn: getCategories,
   });
 
   useEffect(() => {
@@ -25,7 +27,18 @@ export function Form() {
     }
   }, [categories]);
 
-  const handleSubmit = async (e) => {
+  const { mutate: submitComment, isPending } = useMutation({
+    mutationFn: addComment,
+    onSuccess: () => {
+      toast.success('Commentaire ajouté avec succès !');
+      setDataInput({ title: '', category: categories?.[0]?._id || '', message: '' });
+    },
+    onError: (error) => {
+      toast.error(`Erreur : ${error.message || 'Une erreur est survenue.'}`);
+    },
+  });
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const payload = {
@@ -34,16 +47,10 @@ export function Form() {
       categoryId: dataInput.category,
     };
 
-    try {
-      const response = await addComment(payload);
-      console.log('Comment added:', response);
-      setDataInput({ title: '', category: '', message: '' });
-    } catch (error) {
-      console.error('Error adding comment:', error);
-    }
+    submitComment(payload);
   };
 
-  if (isLoadingCategories) return <div>Chargement...</div>;
+  if (isLoadingCategories) return <div>Chargement des catégories...</div>;
   if (isErrorCategories) return <div>Erreur: {errorCategories.message}</div>;
 
   return (
@@ -54,20 +61,22 @@ export function Form() {
           type="text"
           name="title"
           id="title"
+          value={dataInput.title}
           onChange={(e) => setDataInput({ ...dataInput, title: e.target.value })}
         />
       </div>
 
       <div className="field">
-        <label htmlFor="category">Choisir la catégorie :</label>
+        <label htmlFor="category">Catégorie :</label>
         <select
           name="category"
           id="category"
+          value={dataInput.category}
           onChange={(e) => setDataInput({ ...dataInput, category: e.target.value })}
         >
           {categories &&
-            categories.map((category, index) => (
-              <option key={index} value={category._id}>
+            categories.map((category) => (
+              <option key={category._id} value={category._id}>
                 {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
               </option>
             ))}
@@ -75,17 +84,20 @@ export function Form() {
       </div>
 
       <div className="field">
-        <label htmlFor="content">Votre avis :</label>
+        <label htmlFor="content">Votre message :</label>
         <textarea
           name="content"
           id="content"
           rows={5}
+          value={dataInput.message}
           onChange={(e) => setDataInput({ ...dataInput, message: e.target.value })}
         ></textarea>
       </div>
 
       <div className="field txt-right">
-        <button type="submit">Envoyer</button>
+        <button type="submit" disabled={isPending}>
+          {isPending ? 'Envoi en cours...' : 'Envoyer'}
+        </button>
       </div>
     </form>
   );
