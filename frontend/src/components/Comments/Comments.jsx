@@ -3,19 +3,9 @@ import React from 'react';
 
 import { CommentCard } from './CommentCard';
 
-import { getCategories, getComments } from '../../utils/api';
+import { getCategories, getComments, getCommentsByCategory } from '../../utils/api';
 
-export const Comments = () => {
-  const {
-    data: comments,
-    isLoading: isLoadingComments,
-    isError: isErrorComments,
-    error: errorComments,
-  } = useQuery({
-    queryKey: ['comments'],
-    queryFn: () => getComments(),
-  });
-
+export const Comments = ({ selectedCategory }) => {
   const {
     data: categories,
     isLoading: isLoadingCategories,
@@ -23,7 +13,34 @@ export const Comments = () => {
     error: errorCategories,
   } = useQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories(),
+    queryFn: getCategories,
+  });
+
+  const {
+    data: comments,
+    isLoading: isLoadingComments,
+    isError: isErrorComments,
+    error: errorComments,
+  } = useQuery({
+    enabled: !!categories,
+    queryKey: ['comments', selectedCategory],
+    queryFn: () => {
+      if (selectedCategory === 'all') {
+        return getComments();
+      }
+
+      const categoryObj = categories?.find(
+        (cat) => cat.name.toLowerCase() === selectedCategory.toLowerCase()
+      );
+
+      const categoryId = categoryObj?._id;
+
+      if (!categoryId) {
+        return Promise.resolve([]);
+      }
+
+      return getCommentsByCategory(categoryId);
+    },
   });
 
   if (isLoadingComments || isLoadingCategories) return <div>Chargement...</div>;
@@ -33,15 +50,17 @@ export const Comments = () => {
   return (
     <div className="CommentsContainer">
       <ul>
-        {comments?.map(({ id, title, content, category: categoryId, createdAt }, index) => {
-          const categoryObj = categories?.find((categorie) => categorie.id === categoryId);
+        {comments?.map(({ title, content, categoryId, createdAt }, index) => {
+          const categoryObj = categories?.find((categorie) => {
+            return categorie._id === categoryId;
+          });
           const categoryName =
             categoryObj?.name.charAt(0).toUpperCase() + categoryObj?.name.slice(1) ||
             'Catégorie inconnue';
 
           return (
             <CommentCard
-              key={id || index}
+              key={index}
               title={title}
               content={content}
               categoryName={categoryName}

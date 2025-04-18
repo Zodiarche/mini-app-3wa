@@ -12,6 +12,13 @@ export const getComments = async () => {
   return response.json();
 };
 
+export async function getCommentsByCategory(categoryId) {
+  const response = await fetch(`${URL}/api/comments/${categoryId}`);
+  if (!response.ok) throw new Error('Erreur lors du chargement des commentaires par catégorie');
+
+  return response.json();
+}
+
 export const addComment = async (data) => {
   const response = await fetch(`${URL}/api/comments`, {
     method: 'POST',

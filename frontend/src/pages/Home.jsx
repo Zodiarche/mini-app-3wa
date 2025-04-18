@@ -20,7 +20,7 @@ export const Home = () => {
           <h1>Liste des commentaires</h1>
 
           <Categories category={category} setCategory={setCategory} />
-          <Comments />
+          <Comments selectedCategory={category} />
         </div>
       </section>
     </main>
