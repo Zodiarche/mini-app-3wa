@@ -17,7 +17,7 @@ export const Home = () => {
             </Link>
           </div>
 
-          <h1>Listes des commentaires</h1>
+          <h1>Liste des commentaires</h1>
 
           <Categories category={category} setCategory={setCategory} />
           <Comments />

@@ -1,0 +1,85 @@
+[{
+  "_id": {
+    "$oid": "6800f1cb6c022f64d0c7d6a3"
+  },
+  "title": "Un mur d'expression très utile",
+  "content": "J'adore l'idée du mur de feedbacks ! Très utile pour exprimer librement.",
+  "categoryId": {
+    "$oid": "6800f1736c022f64d0c7d69c"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T12:19:23.430Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T12:19:23.430Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f1e06c022f64d0c7d6a5"
+  },
+  "title": "Merci pour cet espace libre",
+  "content": "Merci pour cet espace d'expression anonyme, ça fait du bien !",
+  "categoryId": {
+    "$oid": "6800f1736c022f64d0c7d69c"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T12:19:44.652Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T12:19:44.652Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f1f86c022f64d0c7d6a7"
+  },
+  "title": "Ajouter un tri des messages",
+  "content": "Ce serait bien d'avoir une option pour trier par date ou par popularité.",
+  "categoryId": {
+    "$oid": "6800f1836c022f64d0c7d69e"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T12:20:08.910Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T12:20:08.910Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f2086c022f64d0c7d6a9"
+  },
+  "title": "Interagir avec les messages",
+  "content": "J’aimerais pouvoir répondre à certains messages ou voter pour eux.",
+  "categoryId": {
+    "$oid": "6800f1836c022f64d0c7d69e"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T12:20:24.446Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T12:20:24.446Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f2246c022f64d0c7d6ab"
+  },
+  "title": "Trop de redondance",
+  "content": "Trop de messages similaires, peut-être ajouter une option de fusion ?",
+  "categoryId": {
+    "$oid": "6800f18d6c022f64d0c7d6a0"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T12:20:52.241Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T12:20:52.241Z"
+  },
+  "__v": 0
+}]

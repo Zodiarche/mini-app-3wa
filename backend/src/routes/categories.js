@@ -1,9 +1,10 @@
-import express from "express";
+const express = require("express");
+
 const router = express.Router();
 
-import { addCategory, getCategories } from "../controllers/categories.js";
+const { addCategory, getCategories } = require("../controllers/categories");
 
 router.post("/", addCategory);
 router.get("/", getCategories); // TODO: selon la catégorie
 
-export default router;
+module.exports = router;

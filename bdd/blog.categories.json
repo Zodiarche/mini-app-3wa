@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "6800f1736c022f64d0c7d69c"
+  },
+  "name": "positif",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f1836c022f64d0c7d69e"
+  },
+  "name": "suggestion",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6800f18d6c022f64d0c7d6a0"
+  },
+  "name": "critique",
+  "__v": 0
+}]

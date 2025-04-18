@@ -1,6 +1,4 @@
-// import { Request, Response } from "express";
-
-import Comment from "../models/Comment.js";
+const Comment = require("../models/Comment.js");
 
 /**
  * Récupère tous les commentaires dans la BDD
@@ -11,7 +9,7 @@ import Comment from "../models/Comment.js";
  *
  * @throws {Error}
  */
-export const getComments = async (request, response) => {
+const getComments = async (request, response) => {
   try {
     const comments = await Comment.find();
     return response.status(200).json(comments);
@@ -19,6 +17,24 @@ export const getComments = async (request, response) => {
     console.log("error:", error);
     return response.status(500).json({
       message: "Erreur serveur. Impossible de récupérer les commentaires.",
+    });
+  }
+};
+
+/**
+ * Récupère les commentaires d'une catégorie
+ */
+const getCommentsByCategory = async (request, response) => {
+  const { categoryId } = request.params;
+
+  try {
+    const comments = await Comment.find({ categoryId }).populate("categoryId");
+    return response.status(200).json(comments);
+  } catch (error) {
+    console.error("Erreur dans getCommentsByCategory:", error);
+    return response.status(500).json({
+      message:
+        "Erreur serveur. Impossible de récupérer les commentaires de cette catégorie.",
     });
   }
 };
@@ -32,7 +48,7 @@ export const getComments = async (request, response) => {
  *
  * @throws {Error}
  */
-export const addComment = async (request, response) => {
+const addComment = async (request, response) => {
   const { title, content, categoryId } = request.body;
 
   try {
@@ -47,3 +63,5 @@ export const addComment = async (request, response) => {
       .json({ message: "Erreur serveur. Impossible de créer le commentaire." });
   }
 };
+
+module.exports = { getComments, getCommentsByCategory, addComment };

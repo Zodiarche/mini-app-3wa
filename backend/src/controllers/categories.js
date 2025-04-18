@@ -1,4 +1,4 @@
-import Category from "../models/Category.js";
+const Category = require("../models/Category.js");
 
 /**
  * Récupère tous les commentaires dans la BDD
@@ -9,7 +9,7 @@ import Category from "../models/Category.js";
  *
  * @throws {Error}
  */
-export const getCategories = async (request, response) => {
+const getCategories = async (request, response) => {
   try {
     const categories = await Category.find();
     return response.status(200).json(categories);
@@ -31,7 +31,7 @@ export const getCategories = async (request, response) => {
  *
  * @throws {Error}
  */
-export const addCategory = async (request, response) => {
+const addCategory = async (request, response) => {
   const { name } = request.body;
 
   if (!name || name.trim() === "") {
@@ -52,3 +52,5 @@ export const addCategory = async (request, response) => {
   }
   //   response.json({ message: "post categories" });
 };
+
+module.exports = { getCategories, addCategory };

@@ -1,26 +1,18 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import mongoose from "mongoose";
-import categoriesRoutes from "./routes/categories.js";
-import commentsRoutes from "./routes/comments.js";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+
+const commentsRoutes = require("./routes/comments");
+const categoriesRoutes = require("./routes/categories");
 
 dotenv.config();
 
 const app = express();
+app.use(cors({ origin: process.env.REACT_BASE_URL }));
 app.use(express.json());
 app.use(cors());
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connecté"))
-  .catch((error) => console.error("Erreur de connexion MongoDB:", error));
 
 app.use("/api/comments", commentsRoutes);
 app.use("/api/categories", categoriesRoutes);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on ${process.env.PORT}`);
-});
-
-export default app;
+module.exports = app;

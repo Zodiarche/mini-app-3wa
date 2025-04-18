@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { FormPage } from './FormPage';
 import { Home } from './Home';
+import TestFetch from './TestFetch';
 
 const queryClient = new QueryClient();
 
