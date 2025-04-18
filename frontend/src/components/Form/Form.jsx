@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
+import { addComment, getCategories } from '../../utils/api';
 
 export function Form() {
   const [dataInput, setDataInput] = useState({ title: '', category: '', message: '' });
@@ -12,19 +13,41 @@ export function Form() {
     error: errorCategories,
   } = useQuery({
     queryKey: ['categories'],
-    queryFn: () =>
-      fetch(`http://localhost:5000/api/categories`).then((response) => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      }),
-    cacheTime: 0,
+    queryFn: () => getCategories(),
   });
+
+  useEffect(() => {
+    if (categories && categories.length > 0 && !dataInput.category) {
+      setDataInput((prev) => ({
+        ...prev,
+        category: categories[0]._id,
+      }));
+    }
+  }, [categories]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      title: dataInput.title,
+      content: dataInput.message,
+      categoryId: dataInput.category,
+    };
+
+    try {
+      const response = await addComment(payload);
+      console.log('Comment added:', response);
+      setDataInput({ title: '', category: '', message: '' });
+    } catch (error) {
+      console.error('Error adding comment:', error);
+    }
+  };
 
   if (isLoadingCategories) return <div>Chargement...</div>;
   if (isErrorCategories) return <div>Erreur: {errorCategories.message}</div>;
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="field">
         <label htmlFor="title">Titre :</label>
         <input
@@ -43,11 +66,8 @@ export function Form() {
           onChange={(e) => setDataInput({ ...dataInput, category: e.target.value })}
         >
           {categories &&
-            categories.map((category) => (
-              <option
-                key={category.id}
-                value={category.name.charAt(0).toUpperCase() + category.name.slice(1)}
-              >
+            categories.map((category, index) => (
+              <option key={index} value={category._id}>
                 {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
               </option>
             ))}

@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema(
     categoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      //   required: true,
+      required: true,
     },
   },
   { timestamps: true }

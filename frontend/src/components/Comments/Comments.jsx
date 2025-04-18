@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+
 import { CommentCard } from './CommentCard';
+
+import { getCategories, getComments } from '../../utils/api';
 
 export const Comments = () => {
   const {
@@ -10,12 +13,7 @@ export const Comments = () => {
     error: errorComments,
   } = useQuery({
     queryKey: ['comments'],
-    queryFn: () =>
-      fetch(`http://localhost:5000/api/comments`).then((response) => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      }),
-    cacheTime: 0,
+    queryFn: () => getComments(),
   });
 
   const {
@@ -25,12 +23,7 @@ export const Comments = () => {
     error: errorCategories,
   } = useQuery({
     queryKey: ['categories'],
-    queryFn: () =>
-      fetch(`http://localhost:5000/api/categories`).then((response) => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-      }),
-    cacheTime: 0,
+    queryFn: () => getCategories(),
   });
 
   if (isLoadingComments || isLoadingCategories) return <div>Chargement...</div>;
@@ -40,7 +33,7 @@ export const Comments = () => {
   return (
     <div className="CommentsContainer">
       <ul>
-        {comments?.map(({ title, content, category: categoryId, createdAt, id }) => {
+        {comments?.map(({ id, title, content, category: categoryId, createdAt }, index) => {
           const categoryObj = categories?.find((categorie) => categorie.id === categoryId);
           const categoryName =
             categoryObj?.name.charAt(0).toUpperCase() + categoryObj?.name.slice(1) ||
@@ -48,7 +41,7 @@ export const Comments = () => {
 
           return (
             <CommentCard
-              key={id}
+              key={id || index}
               title={title}
               content={content}
               categoryName={categoryName}

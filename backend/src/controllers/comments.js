@@ -33,10 +33,10 @@ export const getComments = async (request, response) => {
  * @throws {Error}
  */
 export const addComment = async (request, response) => {
-  const { title, content } = request.body;
+  const { title, content, categoryId } = request.body;
 
   try {
-    const newComment = new Comment({ title, content });
+    const newComment = new Comment({ title, content, categoryId });
 
     await newComment.save();
     return response.status(201).json(newComment);
