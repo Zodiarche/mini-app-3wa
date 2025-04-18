@@ -7,8 +7,6 @@ beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URI_TEST);
 });
 
-// TODO : mocks
-
 // Nettoyage après chaque test
 afterEach(async () => {
   const collections = await mongoose.connection.db.collections();
